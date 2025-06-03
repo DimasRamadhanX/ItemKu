@@ -40,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  // Fungsi untuk mengetes SQLite
   Future<void> _testSQLite() async {
     final id = await barangService.addBarang(
       Barang(
@@ -50,7 +49,6 @@ class _MyHomePageState extends State<MyHomePage> {
         deskripsi: 'Deskripsi $_counter',
       ),
     );
-    print('Data berhasil ditambahkan dengan ID: $id');
 
     await _loadData();
   }
@@ -59,6 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
     final data = await barangService.getAllBarang();
     setState(() {
       allData = data;
+    });
+  }
+
+  Future<void> _hapusDatabase() async {
+    await barangService.deleteDatabase();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Database berhasil dihapus')),
+    );
+    setState(() {
+      allData.clear();
     });
   }
 
@@ -88,6 +96,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
               onPressed: _testSQLite,
               child: const Text('Test SQLite Insert'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+              onPressed: _hapusDatabase,
+              child: const Text('Hapus Database'),
             ),
             const SizedBox(height: 16),
             const Divider(),

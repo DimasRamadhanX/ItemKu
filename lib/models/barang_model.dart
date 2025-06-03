@@ -5,6 +5,8 @@ class Barang {
   String alamat;
   String deskripsi;
   String? imagePath; // Path gambar lokal
+  DateTime? tanggalDibuat; // Field tanggal
+  bool isPriority; // atribut baru
 
   Barang({
     this.id,
@@ -13,6 +15,8 @@ class Barang {
     required this.alamat,
     required this.deskripsi,
     this.imagePath,
+    this.tanggalDibuat,
+    this.isPriority = false,  // default false
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +27,8 @@ class Barang {
       'alamat': alamat,
       'deskripsi': deskripsi,
       'imagePath': imagePath,
+      'tanggalDibuat': tanggalDibuat?.toIso8601String(),
+      'isPriority': isPriority ? 1 : 0,  // simpan sebagai integer 1/0 di db
     };
   }
 
@@ -34,6 +40,10 @@ class Barang {
       alamat: map['alamat'],
       deskripsi: map['deskripsi'],
       imagePath: map['imagePath'],
+      tanggalDibuat: map['tanggalDibuat'] != null
+          ? DateTime.tryParse(map['tanggalDibuat'])
+          : null,
+      isPriority: (map['isPriority'] ?? 0) == 1,  // baca dari int ke bool
     );
   }
 }

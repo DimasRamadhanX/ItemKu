@@ -2,92 +2,74 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/barang_model.dart';
 
-class DatabaseHelper {
-  static final DatabaseHelper instance = DatabaseHelper._init();
+class DBHelper {
   static Database? _database;
+  static const String _tableName = 'barang';
 
-  DatabaseHelper._init();
-
-  // Getter untuk database yang hanya akan diinisialisasi sekali
-  Future<Database> get database async {
+  static Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('barang.db');
+    _database = await _initDB();
     return _database!;
   }
 
-  // Inisialisasi database dan path
-  Future<Database> _initDB(String filePath) async {
+  static Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, filePath);
+    final path = join(dbPath, 'barang.db');
 
     return await openDatabase(
       path,
-      version: 1,
-      onCreate: _createDB,
+      version: 1, // versi 1 karena tanpa upgrade lagi
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE $_tableName (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nama TEXT NOT NULL,
+            jumlah INTEGER NOT NULL,
+            alamat TEXT NOT NULL,
+            deskripsi TEXT NOT NULL,
+            imagePath TEXT,
+            tanggalDibuat TEXT,
+            isPriority INTEGER NOT NULL DEFAULT 0
+          )
+        ''');
+      },
     );
   }
 
-  // Pembuatan tabel
-  Future _createDB(Database db, int version) async {
-    await db.execute('''
-      CREATE TABLE barang (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nama TEXT,
-        jumlah INTEGER,
-        alamat TEXT,
-        deskripsi TEXT,
-        imagePath TEXT
-      )
-    ''');
+  static Future<int> insertBarang(Barang barang) async {
+    final db = await database;
+    return await db.insert(_tableName, barang.toMap());
   }
 
-  // -------------------------------
-  // CRUD FUNCTIONS
-  // -------------------------------
-
-  Future<int> insertBarang(Barang barang) async {
-    final db = await instance.database;
-    return await db.insert('barang', barang.toMap());
+  static Future<List<Barang>> getAllBarang() async {
+    final db = await database;
+    final result = await db.query(_tableName, orderBy: 'id DESC');
+    return result.map((map) => Barang.fromMap(map)).toList();
   }
 
-  Future<List<Barang>> getAllBarang() async {
-    final db = await instance.database;
-    final result = await db.query('barang', orderBy: 'id DESC');
-    return result.map((json) => Barang.fromMap(json)).toList();
-  }
-
-  Future<Barang?> getBarangById(int id) async {
-    final db = await instance.database;
-    final result = await db.query(
-      'barang',
-      where: 'id = ?',
-      whereArgs: [id],
-    );
-    return result.isNotEmpty ? Barang.fromMap(result.first) : null;
-  }
-
-  Future<int> updateBarang(Barang barang) async {
-    final db = await instance.database;
+  static Future<int> updateBarang(Barang barang) async {
+    final db = await database;
     return await db.update(
-      'barang',
+      _tableName,
       barang.toMap(),
       where: 'id = ?',
       whereArgs: [barang.id],
     );
   }
 
-  Future<int> deleteBarang(int id) async {
-    final db = await instance.database;
+  static Future<int> deleteBarang(int id) async {
+    final db = await database;
     return await db.delete(
-      'barang',
+      _tableName,
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 
-  // Tutup database (opsional dipanggil saat app ditutup)
-  Future close() async {
-    final db = await instance.database;
-    db.close();
+  static Future<void> deleteDatabaseFile() async {
+    final dbPath = await getDatabasesPath();
+    final path = join(dbPath, 'barang.db');
+    await deleteDatabase(path);
+    _database = null;
   }
 }
