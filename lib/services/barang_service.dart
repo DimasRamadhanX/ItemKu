@@ -23,12 +23,7 @@ class BarangService {
   }
 
   Future<Barang?> getBarangById(int id) async {
-    final all = await DBHelper.getAllBarang();
-    try {
-      return all.firstWhere((item) => item.id == id);
-    } catch (e) {
-      return null;
-    }
+    return await DBHelper.getBarangById(id);
   }
 
   Future<List<Barang>> getBarangTerbaru() async {
@@ -39,12 +34,14 @@ class BarangService {
 
   Future<List<Barang>> getBarangPrioritas() async {
     final all = await DBHelper.getAllBarang();
-    // modifikasi: urutkan berdasarkan flag isPriority terlebih dahulu, lalu jumlah
     all.sort((a, b) {
-      if (b.isPriority && !a.isPriority) return 1;
-      if (a.isPriority && !b.isPriority) return -1;
+      // Ubah boolean ke int, lalu bandingkan supaya prioritas (1) di atas (urutan menurun)
+      int p = (b.isPriority ? 1 : 0) - (a.isPriority ? 1 : 0);
+      if (p != 0) return p; // Kalau beda prioritas, pakai hasil ini
+      // Kalau prioritas sama, urut berdasarkan jumlah menurun
       return b.jumlah.compareTo(a.jumlah);
     });
-    return all.take(5).toList();
+    return all;  // ambil semua tanpa batasan jumlah
   }
+
 }

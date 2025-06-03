@@ -18,7 +18,7 @@ class DBHelper {
 
     return await openDatabase(
       path,
-      version: 1, // versi 1 karena tanpa upgrade lagi
+      version: 1, // versi awal tanpa upgrade
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE $_tableName (
@@ -56,6 +56,22 @@ class DBHelper {
       whereArgs: [barang.id],
     );
   }
+
+  static Future<Barang?> getBarangById(int id) async {
+    final db = await database;
+    final maps = await db.query(
+      _tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+      limit: 1,
+    );
+
+    if (maps.isNotEmpty) {
+      return Barang.fromMap(maps.first);
+    } else {
+      return null;
+    }
+}
 
   static Future<int> deleteBarang(int id) async {
     final db = await database;
