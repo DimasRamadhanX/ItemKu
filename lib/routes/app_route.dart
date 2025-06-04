@@ -6,7 +6,7 @@ import '../views/screens/list.dart';
 import '../views/screens/settings.dart';
 import '../views/screens/add.dart';
 import '../views/screens/splash.dart';
-// import '../views/screens/detail.dart';
+import '../views/screens/detail.dart';
 
 class AppRoute {
   static final GoRouter router = GoRouter(
@@ -52,17 +52,17 @@ class AppRoute {
           name: 'tambah-barang',
         ),
       ),
-      // GoRoute(
-      //   path: '/barang/:id',
-      //   name: 'detail-barang',
-      //   pageBuilder: (context, state) {
-      //     final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-      //     return MaterialPage(
-      //       child: DetailScreen(id: id),
-      //       name: 'detail-barang',
-      //     );
-      //   },
-      // ),
+      GoRoute(
+        path: '/barang/:id',
+        name: 'detail-barang',
+        pageBuilder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+          return MaterialPage(
+            child: DetailScreen(id: id),
+            name: 'detail-barang',
+          );
+        },
+      ),
     ],
   );
 }

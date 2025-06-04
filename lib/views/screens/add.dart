@@ -11,7 +11,7 @@ class AddScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: CustomAppBar(title: 'Tambah Barang'),
       body: Center(child: Text('add item')),
-      bottomNavigationBar: const BottomNav(currentIndex: 1),
+      bottomNavigationBar: BottomNav(currentIndex: 1),
     );
   }
 }
