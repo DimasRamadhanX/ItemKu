@@ -1,46 +1,66 @@
 import 'package:go_router/go_router.dart';
+import 'package:flutter/material.dart';
+
 import '../views/screens/dashboard.dart';
 import '../views/screens/list.dart';
 import '../views/screens/settings.dart';
 import '../views/screens/add.dart';
 import '../views/screens/splash.dart';
-// import 'views/screens/detail.dart';
+// import '../views/screens/detail.dart';
 
 class AppRoute {
   static final GoRouter router = GoRouter(
-    initialLocation: '/', // Mulai dari splash screen
+    initialLocation: '/',
     routes: [
       GoRoute(
         path: '/',
         name: 'splash',
-        builder: (context, state) => const SplashScreen(),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: SplashScreen(),
+          name: 'splash',
+        ),
       ),
       GoRoute(
         path: '/dashboard',
         name: 'dashboard',
-        builder: (context, state) => const DashboardScreen(),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: DashboardScreen(),
+          name: 'dashboard',
+        ),
       ),
       GoRoute(
         path: '/list-barang',
         name: 'list-barang',
-        builder: (context, state) => const ListBarangScreen(),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: ListBarangScreen(),
+          name: 'list-barang',
+        ),
       ),
       GoRoute(
         path: '/settings',
         name: 'settings',
-        builder: (context, state) => const SettingsScreen(),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: SettingsScreen(),
+          name: 'settings',
+        ),
       ),
       GoRoute(
         path: '/barang/tambah',
         name: 'tambah-barang',
-        builder: (context, state) => const AddScreen(),
+        pageBuilder: (context, state) => const MaterialPage(
+          child: AddScreen(),
+          name: 'tambah-barang',
+        ),
       ),
       // GoRoute(
       //   path: '/barang/:id',
       //   name: 'detail-barang',
-      //   builder: (context, state) {
+      //   pageBuilder: (context, state) {
       //     final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-      //     return DetailScreen(id: id);
+      //     return MaterialPage(
+      //       child: DetailScreen(id: id),
+      //       name: 'detail-barang',
+      //     );
       //   },
       // ),
     ],

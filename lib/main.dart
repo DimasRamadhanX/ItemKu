@@ -12,6 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'My App',
+
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
+
       debugShowCheckedModeBanner: false,
       routerConfig: AppRoute.router, // Gunakan router dari app_route.dart
     );

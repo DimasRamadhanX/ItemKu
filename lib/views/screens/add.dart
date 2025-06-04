@@ -8,6 +8,7 @@ class AddScreen extends StatelessWidget {
     return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(child: Text('add item')),
+      
     );
   }
 }
