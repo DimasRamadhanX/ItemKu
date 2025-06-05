@@ -3,7 +3,6 @@ import 'package:myitems/models/barang_model.dart';
 import 'package:myitems/services/barang_service.dart';
 import '../components/bottomnav.dart';
 import '../components/customappbar.dart';
-import 'package:go_router/go_router.dart';
 
 class DetailScreen extends StatefulWidget {
   final int id;
