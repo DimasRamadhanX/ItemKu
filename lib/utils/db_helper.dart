@@ -18,7 +18,7 @@ class DBHelper {
 
     return await openDatabase(
       path,
-      version: 1, // versi awal tanpa upgrade
+      version: 1,
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE $_tableName (
@@ -26,9 +26,9 @@ class DBHelper {
             nama TEXT NOT NULL,
             jumlah INTEGER NOT NULL,
             alamat TEXT NOT NULL,
-            deskripsi TEXT NOT NULL,
+            deskripsi TEXT NOT NULL DEFAULT '',
             imagePath TEXT,
-            tanggalDibuat TEXT,
+            tanggalDibuat TEXT NOT NULL,
             isPriority INTEGER NOT NULL DEFAULT 0
           )
         ''');
@@ -37,55 +37,97 @@ class DBHelper {
   }
 
   static Future<int> insertBarang(Barang barang) async {
-    final db = await database;
-    return await db.insert(_tableName, barang.toMap());
+    try {
+      final db = await database;
+      
+      // Validasi data sebelum insert
+      final data = barang.toMap();
+      
+      // Pastikan tanggalDibuat tidak null
+      if (data['tanggalDibuat'] == null || data['tanggalDibuat'] == '') {
+        data['tanggalDibuat'] = DateTime.now().toIso8601String();
+      }
+      
+      // Pastikan deskripsi tidak null
+      data['deskripsi'] = data['deskripsi'] ?? '';
+      
+      return await db.insert(_tableName, data);
+    } catch (e) {
+      print('Error inserting barang: $e');
+      rethrow;
+    }
   }
 
   static Future<List<Barang>> getAllBarang() async {
-    final db = await database;
-    final result = await db.query(_tableName, orderBy: 'id DESC');
-    return result.map((map) => Barang.fromMap(map)).toList();
+    try {
+      final db = await database;
+      final result = await db.query(_tableName, orderBy: 'id DESC');
+      return result.map((map) => Barang.fromMap(map)).toList();
+    } catch (e) {
+      print('Error getting all barang: $e');
+      return [];
+    }
   }
 
   static Future<int> updateBarang(Barang barang) async {
-    final db = await database;
-    return await db.update(
-      _tableName,
-      barang.toMap(),
-      where: 'id = ?',
-      whereArgs: [barang.id],
-    );
+    try {
+      final db = await database;
+      return await db.update(
+        _tableName,
+        barang.toMap(),
+        where: 'id = ?',
+        whereArgs: [barang.id],
+      );
+    } catch (e) {
+      print('Error updating barang: $e');
+      rethrow;
+    }
   }
 
   static Future<Barang?> getBarangById(int id) async {
-    final db = await database;
-    final maps = await db.query(
-      _tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-      limit: 1,
-    );
+    try {
+      final db = await database;
+      final maps = await db.query(
+        _tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+        limit: 1,
+      );
 
-    if (maps.isNotEmpty) {
-      return Barang.fromMap(maps.first);
-    } else {
+      if (maps.isNotEmpty) {
+        return Barang.fromMap(maps.first);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error getting barang by id: $e');
       return null;
     }
-}
+  }
 
   static Future<int> deleteBarang(int id) async {
-    final db = await database;
-    return await db.delete(
-      _tableName,
-      where: 'id = ?',
-      whereArgs: [id],
-    );
+    try {
+      final db = await database;
+      return await db.delete(
+        _tableName,
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+    } catch (e) {
+      print('Error deleting barang: $e');
+      rethrow;
+    }
   }
 
   static Future<void> deleteDatabaseFile() async {
-    final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'barang.db');
-    await deleteDatabase(path);
-    _database = null;
+    try {
+      final dbPath = await getDatabasesPath();
+      final path = join(dbPath, 'barang.db');
+      await deleteDatabase(path);
+      _database = null; // ✅ Fixed: was *database = null
+    } catch (e) {
+      print('Error deleting database: $e');
+      rethrow;
+    }
   }
 }

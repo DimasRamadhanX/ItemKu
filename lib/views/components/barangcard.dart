@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../models/barang_model.dart';
+import 'dart:io';
+
 
 class BarangCard extends StatelessWidget {
   final Barang barang;
@@ -59,10 +61,10 @@ class BarangCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: barang.imagePath != null
-                  ? Image.asset(
-                      barang.imagePath!,
-                      width: 72,
-                      height: 72,
+                  ? Image.file(
+                      File(barang.imagePath!),
+                      width: 100,
+                      height: 100,
                       fit: BoxFit.cover,
                     )
                   : Icon(Icons.image, size: 72, color: Colors.grey.shade400),

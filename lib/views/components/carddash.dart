@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:go_router/go_router.dart';
 import 'package:myitems/models/barang_model.dart';
 
@@ -42,9 +43,20 @@ class CardDash extends StatelessWidget {
                   borderRadius:
                       const BorderRadius.vertical(top: Radius.circular(16)),
                 ),
-                child: const Center(
-                  child: Icon(Icons.image, size: 50, color: Colors.grey),
-                ),
+              child: barang.imagePath != null && barang.imagePath!.isNotEmpty
+                  ? ClipRRect(
+                      borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                      child: Image.file(
+                        File(barang.imagePath!),
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    )
+                  : const Center(
+                      child: Icon(Icons.image, size: 50, color: Colors.grey),
+                    ),
+
               ),
             ),
             Expanded(

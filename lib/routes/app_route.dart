@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:myitems/views/screens/tes.dart';
 
 import '../views/screens/dashboard.dart';
 import '../views/screens/list.dart';
@@ -18,6 +19,14 @@ class AppRoute {
         pageBuilder: (context, state) => const MaterialPage(
           child: SplashScreen(),
           name: 'splash',
+        ),
+      ),
+      GoRoute(
+        path: '/',
+        name: 'tes',
+        pageBuilder: (context, state) => const MaterialPage(
+          child: TesScreen(),
+          name: 'tes',
         ),
       ),
       GoRoute(
