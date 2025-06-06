@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -76,7 +78,6 @@ class _DetailScreenState extends State<DetailScreen> {
         }
       }
     } catch (e) {
-      print('Error loading barang: $e');
       if (mounted) {
         _showSnackBar('Gagal memuat data barang: ${e.toString()}', isError: true);
         setState(() => _isLoading = false);
@@ -102,7 +103,6 @@ class _DetailScreenState extends State<DetailScreen> {
         setState(() => _selectedImage = file);
       }
     } catch (e) {
-      print('Error picking image: $e');
       if (mounted) {
         _showSnackBar('Gagal memilih gambar: ${e.toString()}', isError: true);
       }
@@ -195,7 +195,6 @@ class _DetailScreenState extends State<DetailScreen> {
         isPriority: _isPrioritas,
       );
 
-      print('Updating barang: ${updatedBarang.toMap()}');
       
       await BarangService().updateBarang(updatedBarang);
       
@@ -204,7 +203,6 @@ class _DetailScreenState extends State<DetailScreen> {
       }
       
     } catch (e) {
-      print('Error updating barang: $e');
       if (mounted) {
         _showSnackBar('Gagal memperbarui barang: ${e.toString()}', isError: true);
       }
@@ -262,7 +260,6 @@ class _DetailScreenState extends State<DetailScreen> {
           });
         }
       } catch (e) {
-        print('Error deleting barang: $e');
         if (mounted) {
           _showSnackBar('Gagal menghapus barang: ${e.toString()}', isError: true);
         }

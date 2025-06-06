@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
 
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: ThemeMode.light, // Gunakan mode tema sistem
+      themeMode: ThemeMode.system, // Gunakan mode tema sistem
 
       debugShowCheckedModeBanner: false,
       routerConfig: AppRoute.router, // Gunakan router dari app_route.dart

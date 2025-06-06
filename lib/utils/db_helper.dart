@@ -53,7 +53,6 @@ class DBHelper {
       
       return await db.insert(_tableName, data);
     } catch (e) {
-      print('Error inserting barang: $e');
       rethrow;
     }
   }
@@ -64,7 +63,6 @@ class DBHelper {
       final result = await db.query(_tableName, orderBy: 'id DESC');
       return result.map((map) => Barang.fromMap(map)).toList();
     } catch (e) {
-      print('Error getting all barang: $e');
       return [];
     }
   }
@@ -79,7 +77,6 @@ class DBHelper {
         whereArgs: [barang.id],
       );
     } catch (e) {
-      print('Error updating barang: $e');
       rethrow;
     }
   }
@@ -100,7 +97,6 @@ class DBHelper {
         return null;
       }
     } catch (e) {
-      print('Error getting barang by id: $e');
       return null;
     }
   }
@@ -114,7 +110,6 @@ class DBHelper {
         whereArgs: [id],
       );
     } catch (e) {
-      print('Error deleting barang: $e');
       rethrow;
     }
   }
@@ -126,7 +121,6 @@ class DBHelper {
       await deleteDatabase(path);
       _database = null; // ✅ Fixed: was *database = null
     } catch (e) {
-      print('Error deleting database: $e');
       rethrow;
     }
   }
