@@ -22,7 +22,7 @@ class AppRoute {
         ),
       ),
       GoRoute(
-        path: '/',
+        path: '/tes',
         name: 'tes',
         pageBuilder: (context, state) => const MaterialPage(
           child: TesScreen(),
@@ -67,7 +67,7 @@ class AppRoute {
         pageBuilder: (context, state) {
           final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
           return MaterialPage(
-            child: DetailScreen(id: id),
+            child: DetailScreen(barangId: id), // Perbaikan: gunakan barangId
             name: 'detail-barang',
           );
         },
