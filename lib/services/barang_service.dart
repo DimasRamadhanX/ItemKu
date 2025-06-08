@@ -53,36 +53,37 @@ class BarangService {
   Future<List<Barang>> getBarangTerbaru() async {
     try {
       final all = await DBHelper.getAllBarang();
-      all.sort((a, b) => (b.tanggalDibuat ?? DateTime(0)).compareTo(a.tanggalDibuat ?? DateTime(0)));
+      all.sort((a, b) =>
+          (b.tanggalDibuat ?? DateTime(0)).compareTo(a.tanggalDibuat ?? DateTime(0)));
       return all.take(5).toList();
     } catch (e) {
       throw Exception('Gagal mengambil barang terbaru: $e');
     }
   }
 
+  // Fixed Version
   Future<List<Barang>> getBarangPrioritas() async {
     try {
       final all = await DBHelper.getAllBarang();
-      all.sort((a, b) {
-        int p = (b.isPriority ? 1 : 0) - (a.isPriority ? 1 : 0);
-        if (p != 0) return p;
-        return b.jumlah.compareTo(a.jumlah);
-      });
-      return all;
+      final prioritas = all.where((barang) => barang.isPriority == true).toList();
+      prioritas.sort((a, b) => b.jumlah.compareTo(a.jumlah));
+      return prioritas;
     } catch (e) {
       throw Exception('Gagal mengambil barang prioritas: $e');
     }
   }
+
   Future<List<Barang>> searchBarangByName(String keyword) async {
-  try {
-    final all = await DBHelper.getAllBarang();
-    return all
-        .where((barang) => barang.nama.toLowerCase().contains(keyword.toLowerCase()))
-        .toList();
-  } catch (e) {
-    throw Exception('Gagal melakukan pencarian barang: $e');
+    try {
+      final all = await DBHelper.getAllBarang();
+      return all
+          .where((barang) =>
+              barang.nama.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    } catch (e) {
+      throw Exception('Gagal melakukan pencarian barang: $e');
+    }
   }
-}
 
   Future<int> countBarang() async {
     try {
@@ -92,5 +93,4 @@ class BarangService {
       throw Exception('Gagal menghitung total barang: $e');
     }
   }
-
 }
