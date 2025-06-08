@@ -54,7 +54,7 @@ class _ListBarangScreenState extends State<ListBarangScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Beranda'),
+      appBar: const CustomAppBar(title: 'Daftar Barang'),
       body: Column(
       children: [
         Padding(
