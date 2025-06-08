@@ -8,6 +8,7 @@ class KetentuanLayanan extends StatelessWidget {
     return Text(
       '''
 Ketentuan Layanan:
+
 1. Aplikasi ini digunakan untuk mencatat dan menyimpan informasi lokasi barang pribadi.
 2. Pengguna bertanggung jawab atas data yang diunggah ke aplikasi.
 3. Kami tidak menyimpan data Anda secara eksternal, semua data disimpan di perangkat Anda.

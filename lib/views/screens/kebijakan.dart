@@ -8,6 +8,7 @@ class KebijakanPrivasi extends StatelessWidget {
     return Text(
       '''
 Kebijakan Privasi:
+
 1. FindThings tidak mengumpulkan data pribadi Anda.
 2. Semua informasi tentang barang disimpan secara lokal di perangkat Anda.
 3. Kami tidak memiliki akses ke lokasi, kamera, atau file Anda tanpa izin eksplisit.
