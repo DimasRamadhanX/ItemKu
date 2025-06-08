@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../components/bottomnav.dart';
 import '../components/customappbar.dart';
+import 'ketentuan.dart';
+import 'kebijakan.dart';
+import 'pusat.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool showKetentuan = false;
+  bool showKebijakan = false;
+  bool showBantuan = false;
 
   @override
   Widget build(BuildContext context) {
@@ -14,37 +26,56 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const CustomAppBar(title: 'Pengaturan'),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildButton(
               context,
               title: 'Ketentuan Layanan',
               onPressed: () {
-                // context.goNamed('ketentuan');
+                setState(() {
+                  showKetentuan = !showKetentuan;
+                });
               },
             ),
             const SizedBox(height: 12),
+            if (showKetentuan) ...[
+              const KetentuanLayanan(),
+              const SizedBox(height: 24),
+            ],
             _buildButton(
               context,
               title: 'Kebijakan Privasi',
               onPressed: () {
-                // context.goNamed('kebijakan');
+                setState(() {
+                  showKebijakan = !showKebijakan;
+                });
               },
             ),
             const SizedBox(height: 12),
+            if (showKebijakan) ...[
+              const KebijakanPrivasi(),
+              const SizedBox(height: 24),
+            ],
             _buildButton(
               context,
               title: 'Pusat Bantuan',
               onPressed: () {
-                // context.goNamed('bantuan');
+                setState(() {
+                  showBantuan = !showBantuan;
+                });
               },
             ),
+            const SizedBox(height: 12),
+            if (showBantuan) ...[
+              const PusatBantuan(),
+              const SizedBox(height: 24),
+            ],
           ],
         ),
       ),
-      // jangan dihapus bottom navbar
       bottomNavigationBar: const BottomNav(currentIndex: 2),
     );
   }
