@@ -9,8 +9,9 @@
 - Muhammad Ali Husain R. (5026221156)
 
 Laporan perancangan aplikasi: [Laporan Perancangan](https://intip.in/LaporanFindThings/)
-<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/splashscreen.png" width="150" alt="Foto kecil"/>
-<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/beranda.png" width="150" alt="Foto kecil"/>
+
+<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/splashscreen.png" />
+
 
 ## 🔍 Deskripsi Aplikasi
 
