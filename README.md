@@ -10,8 +10,8 @@
 
 Laporan perancangan aplikasi: [Laporan Perancangan](https://intip.in/LaporanFindThings/)
 
-<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/splash.png" />
-<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/add.png" />
+<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/splash.png" width="150" alt="Foto kecil"/>/>
+<img src="https://github.com/DimasRamadhanX/ItemKu/blob/main/Assets/add.png" width="150" alt="Foto kecil"/>/>
 
 ## 🔍 Deskripsi Aplikasi
 
